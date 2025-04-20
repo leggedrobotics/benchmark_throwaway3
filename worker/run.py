@@ -7,18 +7,18 @@ def get_curr_working_dir():
     curr_working_dir = os.getcwd()
     return curr_working_dir
 
-
 def run():
     current_working_directory = get_curr_working_dir()
     sys.path.append("{}".format(current_working_directory))
     sys.path.append("{}/challenge_data/challenge_1".format(current_working_directory))
 
     challenge_id = 1
-    challenge_phase = "test"  # Add the challenge phase codename to be tested
-    annotation_file_path = "{}/annotations/test_annotations_testsplit.json".format(
-        current_working_directory
+    challenge_phase = "dev"  # Add the challenge phase codename to be tested
+    # Make the annotation file path dependent on the challenge_phase
+    annotation_file_path = "{}/annotations/{}_annotations.zip".format(
+        current_working_directory, challenge_phase
     )  # Add the test annotation file path
-    user_submission_file_path = "{}/submission.json".format(
+    user_submission_file_path = "{}/submission.zip".format(
         current_working_directory
     )  # Add the sample submission file path
 
