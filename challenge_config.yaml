@@ -1,48 +1,73 @@
 # If you are not sure what all these fields mean, please refer our documentation here:
 # https://evalai.readthedocs.io/en/latest/configuration.html
-title: Random Number Generator Challenge
-short_description: Random number generation challenge for each submission
+title: The GrandTour Localization Challenge
+short_description: Robot pose estimation in the wild.
 description: templates/description.html
 evaluation_details: templates/evaluation_details.html
 terms_and_conditions: templates/terms_and_conditions.html
 image: logo.jpg
 submission_guidelines: templates/submission_guidelines.html
-leaderboard_description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras egestas a libero nec sagittis.
+leaderboard_description: The leaderboard is based on the average of the metrics across all splits in the challange.
 evaluation_script: evaluation_script.zip
 remote_evaluation: False
 start_date: 2019-01-01 00:00:00
 end_date: 2099-05-31 23:59:59
 published: True
 tags: 
-  - random-number-generation
-  - machine-learning
-  - data-science
+  - Legged Robots
+  - SLAM
+  - Field Robotics
   - computer-vision
 leaderboard:
   - id: 1
     schema:
       {
-        "labels": ["Metric1", "Metric2", "Metric3", "Total"],
-        "default_order_by": "Total",
+        "labels": ["ATE", "RTE", "LE"],
+        "default_order_by": "ATE",
         "metadata": {
           "Metric1": {
             "sort_ascending": True,
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "description": "Absolute Translation Error.",
           },
           "Metric2": {
             "sort_ascending": True,
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            "description": "Relative Translation Error.",
+          },
+          "LE": {
+            "sort_ascending": True,
+            "description": "Last Error for ATE.",
+          }
+        }
+      }
+  - id: 2
+    schema:
+      {
+        "labels": ["ATE", "RTE", "LE"],
+        "default_order_by": "LE",
+        "metadata": {
+          "ATE": {
+            "sort_ascending": True,
+            "description": "Absolute Translation Error.",
+          },
+          "RTE": {
+            "sort_ascending": True,
+            "description": "Relative Translation Error.",
+          },
+          "LE": {
+            "sort_ascending": True,
+            "description": "Last Error for ATE.",
           }
         }
       }
 
 challenge_phases:
   - id: 1
-    name: Dev Phase
+    name: Development Phase
+    codename: dev
+    # challenge: 1
     description: templates/challenge_phase_1_description.html
-    leaderboard_public: False
+    leaderboard_public: True
     is_public: True
-    challenge: 1
     is_active: True
     max_concurrent_submissions_allowed: 3
     allowed_email_ids: []
@@ -51,7 +76,6 @@ challenge_phases:
     start_date: 2019-01-19 00:00:00
     end_date: 2099-04-25 23:59:59
     test_annotation_file: annotations/test_annotations_devsplit.json
-    codename: dev
     max_submissions_per_day: 5
     max_submissions_per_month: 50
     max_submissions: 50
@@ -83,22 +107,28 @@ challenge_phases:
         required: True
     is_restricted_to_select_one_submission: False
     is_partial_submission_evaluation_enabled: False
-    allowed_submission_file_types: ".json, .zip, .txt, .tsv, .gz, .csv, .h5, .npy, .npz"
+    allowed_submission_file_types: ".zip, .txt, .tum"
+    
+  ###############
+  ###############
+  # Test Phase #
+  ###############
+  ###############
   - id: 2
-    name: Test Phase
+    name: Benchmark Phase
+    codename: test
+    # challenge: 2
     description: templates/challenge_phase_2_description.html
     leaderboard_public: True
-    is_public: True
-    challenge: 2
+    is_public: False
     is_active: True
-    max_concurrent_submissions_allowed: 3
+    test_annotation_file: annotations/test_annotations_testsplit.json
     allowed_email_ids: []
     disable_logs: False
-    is_submission_public: True
+    is_submission_public: False
     start_date: 2019-01-01 00:00:00
     end_date: 2099-05-24 23:59:59
-    test_annotation_file: annotations/test_annotations_testsplit.json
-    codename: test
+    max_concurrent_submissions_allowed: 3
     max_submissions_per_day: 5
     max_submissions_per_month: 50
     max_submissions: 50
@@ -128,37 +158,124 @@ challenge_phases:
         type: boolean
     is_restricted_to_select_one_submission: False
     is_partial_submission_evaluation_enabled: False
+    allowed_submission_file_types: ".zip, .txt, .tum"
 
 dataset_splits:
   - id: 1
-    name: Train Split
-    codename: train_split
-  - id: 2
-    name: Test Split
-    codename: test_split
+    name: Train Split 1 Heap
+    codename: heap
 
+  - id: 2
+    name: Train Split 2 Eiger
+    codename: eiger
+
+  - id: 3
+    name: Test Split 3
+    codename: test_split_3
+
+  - id: 4
+    name: Test Split 4
+    codename: test_split_4
+
+  - id: 10
+    name: Test Split 10
+    codename: test_split_10
+
+  - id: 11
+    name: Test Split 11
+    codename: test_split_11
+
+  - id: 12
+    name: Test Split 12
+    codename: test_split_12
+
+  - id: 13
+    name: Test Split 13
+    codename: test_split_13
+
+# Connect the challange phases with the splits
 challenge_phase_splits:
+  # Training Phase Mission 1
   - challenge_phase_id: 1
     leaderboard_id: 1
     dataset_split_id: 1
-    visibility: 1
-    leaderboard_decimal_precision: 2
+    # 1 Only visible to challenge host
+    # 2 Only visible to challenge host and participant who made that submission
+    # 3 Visible to everyone on leaderboard
+    visibility: 3
+    leaderboard_decimal_precision: 3
     is_leaderboard_order_descending: True
     show_execution_time: True
     show_leaderboard_by_latest_submission: True
-  - challenge_phase_id: 2
-    leaderboard_id: 1
-    dataset_split_id: 1
-    visibility: 3
-    leaderboard_decimal_precision: 2
-    is_leaderboard_order_descending: True
-    showeceution_time: False
-    show_leaderboard_by_latest_submission: False
-  - challenge_phase_id: 2
+
+  # Training Phase Mission 2
+  - challenge_phase_id: 1
     leaderboard_id: 1
     dataset_split_id: 2
+    visibility: 3
+    leaderboard_decimal_precision: 3
+    is_leaderboard_order_descending: True
+    show_execution_time: True
+    show_leaderboard_by_latest_submission: True
+
+  # Training Phase Mission 3
+  - challenge_phase_id: 1
+    leaderboard_id: 1
+    dataset_split_id: 3
+    visibility: 3
+    leaderboard_decimal_precision: 3
+    is_leaderboard_order_descending: True
+    show_execution_time: True
+    show_leaderboard_by_latest_submission: True
+
+  # Training Phase Mission 4
+  - challenge_phase_id: 1
+    leaderboard_id: 1
+    dataset_split_id: 4
+    visibility: 3
+    leaderboard_decimal_precision: 3
+    is_leaderboard_order_descending: True
+    show_execution_time: True
+    show_leaderboard_by_latest_submission: True
+
+  # #################################
+
+  # # Testing Phase Mission 1
+  - challenge_phase_id: 2
+    leaderboard_id: 2
+    dataset_split_id: 10
     visibility: 1
-    leaderboard_decimal_precision: 2
+    leaderboard_decimal_precision: 3
+    is_leaderboard_order_descending: True
+    showeceution_time: True
+    show_leaderboard_by_latest_submission: True
+
+  # # Testing Phase Mission 2
+  - challenge_phase_id: 2
+    leaderboard_id: 2
+    dataset_split_id: 11
+    visibility: 1
+    leaderboard_decimal_precision: 3
+    is_leaderboard_order_descending: True
+    show_execution_time: True
+    show_leaderboard_by_latest_submission: True
+
+  # # Testing Phase Mission 3
+  - challenge_phase_id: 2
+    leaderboard_id: 2
+    dataset_split_id: 12
+    visibility: 1
+    leaderboard_decimal_precision: 3
+    is_leaderboard_order_descending: True
+    show_execution_time: True
+    show_leaderboard_by_latest_submission: True
+
+  # # Testing Phase Mission 4
+  - challenge_phase_id: 2
+    leaderboard_id: 2
+    dataset_split_id: 13
+    visibility: 1
+    leaderboard_decimal_precision: 3
     is_leaderboard_order_descending: True
     show_execution_time: True
     show_leaderboard_by_latest_submission: True
