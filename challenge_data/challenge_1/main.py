@@ -117,35 +117,56 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
 
     # # output["result"] = []
 
+    output["stdout"] = [
+                {
+                    "STDOUT": "testing"
+                }
+    ]
+
+    output["metadata"] = [
+                {
+                    "average-evaluation-time": "5 secs",
+                    "foo": "bar"
+                }
+    ]
+
     output["result"] = [
     {
-        "heap": {
+        "split": "heap",
+        "show_to_participant": True,
+        "accuracies": {
             "ATE": 1.34, # Use .get for safety if keys might be missing
             "RTE": 2.45,
-            "LE": 3.51,
+            "LE": 3.51
         }
     },
     {
-        "eiger": {
+        "split": "eiger",
+        "show_to_participant": True,
+        "accuracies": {
             "ATE": 1.34, # Use .get for safety if keys might be missing
             "RTE": 2.45,
-            "LE": 3.51,
+            "LE": 3.51
         }
     },
     {
-        "tt3": {
+        "split": "tt3",
+        "show_to_participant": True,
+        "accuracies": {
             "ATE": 1.34, # Use .get for safety if keys might be missing
             "RTE": 2.45,
-            "LE": 3.51,
+            "LE": 3.51
         }
     },
     {
-        "tt4": {
+        "split": "tt4",
+        "show_to_participant": True,
+        "accuracies": {
             "ATE": 1.34, # Use .get for safety if keys might be missing
             "RTE": 2.45,
-            "LE": 3.51,
+            "LE": 3.51
         }
-    },
+    }
 ]
 
     # for i, eval_result in enumerate(evaluated_metrics):
