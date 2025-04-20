@@ -66,13 +66,13 @@ challenge_phases:
     codename: dev
     # challenge: 1
     description: templates/challenge_phase_1_description.html
-    leaderboard_public: True
-    is_public: True
+    leaderboard_public: False
+    is_public: False
     is_active: True
     max_concurrent_submissions_allowed: 3
     allowed_email_ids: []
     disable_logs: False
-    is_submission_public: True
+    is_submission_public: False
     start_date: 2019-01-19 00:00:00
     end_date: 2099-04-25 23:59:59
     test_annotation_file: annotations/test_annotations_devsplit.json
@@ -119,7 +119,7 @@ challenge_phases:
     codename: test
     # challenge: 2
     description: templates/challenge_phase_2_description.html
-    leaderboard_public: True
+    leaderboard_public: False
     is_public: False
     is_active: True
     test_annotation_file: annotations/test_annotations_testsplit.json
@@ -162,20 +162,20 @@ challenge_phases:
 
 dataset_splits:
   - id: 1
-    name: Train Split 1 Heap
+    name: Heap Dataset
     codename: heap
 
   - id: 2
-    name: Train Split 2 Eiger
+    name: Eiger Dataset
     codename: eiger
 
   - id: 3
     name: Test Split 3
-    codename: test_split_3
+    codename: tt_dataset_split_3
 
   - id: 4
     name: Test Split 4
-    codename: test_split_4
+    codename: tt_dataset_split_4
 
   - id: 10
     name: Test Split 10
