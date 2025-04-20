@@ -171,11 +171,11 @@ dataset_splits:
 
   - id: 3
     name: Test Split 3
-    codename: tt_dataset_split_3
+    codename: tt3
 
   - id: 4
     name: Test Split 4
-    codename: tt_dataset_split_4
+    codename: tt4
 
   - id: 10
     name: Test Split 10
