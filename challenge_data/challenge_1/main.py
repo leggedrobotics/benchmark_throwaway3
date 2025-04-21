@@ -4,6 +4,8 @@ import zipfile
 from evaluation_script.evo_script import TrajectoryEvaluator, read_tum_trajectory_matrix
 import sys
 
+# Add parent directory (where evaluation_script lives) to Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
     # script_dir = os.path.dirname(os.path.abspath(__file__))
