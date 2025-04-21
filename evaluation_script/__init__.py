@@ -4,6 +4,16 @@ import os
 import urllib.request
 import json
 
+def version_to_tuple(version):
+    # Split version by '.' and keep only numeric parts
+    numeric_parts = []
+    for part in version.split("."):
+        # Extract leading numeric portion of each part
+        numeric_part = "".join(c for c in part if c.isdigit())
+        if numeric_part:
+            numeric_parts.append(int(numeric_part))
+    return tuple(numeric_parts)
+
 def is_package_version_on_pypi(package_name, version=None):
     """
     Checks if a package (and optionally a specific version) exists on PyPI.
@@ -53,9 +63,8 @@ def is_package_version_on_pypi(package_name, version=None):
         return False
 
 def install(package):
-    # Install a pip python package
-
     try:
+        # Install a pip python package
         subprocess.run([sys.executable,"-m","pip","install","--disable-pip-version-check",package])
     except subprocess.CalledProcessError as e:
         print(f"Error occurred while installing {package}: {e.stderr}")
@@ -68,11 +77,9 @@ def install(package):
         sys.stderr.flush()
 
 # Install standard dependencies
-# install("argcomplete")
-# install("colorama")
+install("colorama")
 install("pillow")
 # install("pykitti")            # Might install additional light deps
-# install("rosbags")
 # is_package_version_on_pypi("natsort")
 install("natsort")
 # install("lz4")
@@ -81,22 +88,10 @@ install("zstandard")
 # Install evo from local wheel inside evaluation_script/deps/
 this_dir = os.path.dirname(__file__)
 evo_wheel_path = os.path.join(this_dir, "deps", "evo-1.31.1-py3-none-any.whl")
-
-# # try:
 subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps","--disable-pip-version-check", "--ignore-requires-python", evo_wheel_path])
 
+# Verify evo version
 from evo import __version__
-
-def version_to_tuple(version):
-    # Split version by '.' and keep only numeric parts
-    numeric_parts = []
-    for part in version.split("."):
-        # Extract leading numeric portion of each part
-        numeric_part = "".join(c for c in part if c.isdigit())
-        if numeric_part:
-            numeric_parts.append(int(numeric_part))
-    return tuple(numeric_parts)
-
 evo_version_tuple = version_to_tuple(__version__)
 required_version_tuple = (1, 30, 1)
 
@@ -108,12 +103,6 @@ if evo_version_tuple < required_version_tuple:
 else:
     print(f"✅ Evo version {__version__} meets the required version.")
     sys.stdout.flush()
-
-
-from evo.core import sync
-from evo.core.trajectory import PoseTrajectory3D
-from evo.core.trajectory import Plane
-from evo.core.metrics import PoseRelation, Unit
 
 print("✅ evo is installed and available.")
 sys.stdout.flush()
