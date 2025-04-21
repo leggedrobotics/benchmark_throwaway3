@@ -29,4 +29,10 @@ try:
 except subprocess.CalledProcessError as e:
     print(f"Failed to install evo: {e}")
 
+try:
+    import evo
+    print("✅ evo is installed and available.")
+except ImportError as e:
+    print("❌ evo is NOT available:", e)
+
 from .main import evaluate
