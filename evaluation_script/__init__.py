@@ -162,10 +162,8 @@ from evo.core.trajectory import PoseTrajectory3D
 from evo.core.trajectory import Plane
 from evo.core.metrics import PoseRelation, Unit
 # from evo.tools import file_interface
-import evo.main_ape as main_ape
-import evo.main_rpe as main_rpe
-
-
+# import evo.main_ape as main_ape
+# import evo.main_rpe as main_rpe
 
 # print("✅ evo is installed and available.")
 # except subprocess.CalledProcessError as e:
