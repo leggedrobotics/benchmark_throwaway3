@@ -7,12 +7,11 @@ import numpy as np
 import pandas as pd
 import yaml
 import csv
-import evo
 from evo.core import sync
 from evo.core.trajectory import PoseTrajectory3D
 from evo.core.trajectory import Plane
 from evo.core.metrics import PoseRelation, Unit
-from evo.tools import file_interface
+# from evo.tools import file_interface
 import evo.main_ape as main_ape
 import evo.main_rpe as main_rpe
 class FileInterfaceException(Exception):
