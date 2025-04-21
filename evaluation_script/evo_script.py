@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import yaml
 import csv
+import evo
 from evo.core import sync
 from evo.core.trajectory import PoseTrajectory3D
 from evo.core.trajectory import Plane
