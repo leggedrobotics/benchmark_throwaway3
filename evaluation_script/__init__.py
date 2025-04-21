@@ -30,6 +30,7 @@ except subprocess.CalledProcessError as e:
     print(f"Failed to install evo: {e}")
 
 # try:
+#
 import evo as iamtired
 subprocess.check_call(['echo', '✅ evo is installed and available.'])
 # except ImportError as e:
