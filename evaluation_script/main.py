@@ -1,7 +1,8 @@
 import os
 import io
 import zipfile
-from evo_script import TrajectoryEvaluator, read_tum_trajectory_matrix
+print("Testing Import evo.")
+from .evo_script import TrajectoryEvaluator, read_tum_trajectory_matrix
 import sys
 
 
