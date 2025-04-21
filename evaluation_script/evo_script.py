@@ -14,8 +14,8 @@ from evo.core.metrics import PoseRelation, Unit
 # from evo.tools import file_interface
 # import evo.main_ape as main_ape
 # import evo.main_rpe as main_rpe
-from .evo_ape_fork import main_ape
-from .evo_rpe_fork import main_rpe
+from .evo_ape_fork import ape
+from .evo_rpe_fork import rpe
 class FileInterfaceException(Exception):
     pass
 
@@ -183,7 +183,7 @@ class TrajectoryEvaluator:
             traj_ref, traj_est, cfg["t_max_diff"], cfg["t_offset"]
         )
 
-        ape = main_ape.ape(
+        ape_res = ape(
             traj_ref,
             traj_est,
             est_name="estimated",
@@ -196,7 +196,7 @@ class TrajectoryEvaluator:
             project_to_plane=plane_param,
         )
 
-        rpe = main_rpe.rpe(
+        rpe_res = rpe(
             traj_ref,
             traj_est,
             est_name="estimated",
@@ -213,9 +213,9 @@ class TrajectoryEvaluator:
         )
 
         return {
-            "ATE": float(ape.stats["rmse"]),
-            "RTE": float(rpe.stats["rmse"]),
-            "LE": float(ape.np_arrays["error_array"][-1]),
+            "ATE": float(ape_res.stats["rmse"]),
+            "RTE": float(rpe_res.stats["rmse"]),
+            "LE": float(ape_res.np_arrays["error_array"][-1]),
         }
 
     # -- filters --------------------------------------------------------
