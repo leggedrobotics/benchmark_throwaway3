@@ -1,8 +1,6 @@
 import os
 import io
 import zipfile
-import evo
-print("Starting Evaluation.....")
 print("Starting Evaluation.....")
 print("Starting Evaluation.....")
 from .evo_script import TrajectoryEvaluator, read_tum_trajectory_matrix
