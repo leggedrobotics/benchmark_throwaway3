@@ -7,14 +7,13 @@ import sys
 
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
-
+    #🔁
     print("\n" + "=" * 80)
-    print("🔁 NEW RUN STARTING")
+    print(f"Evaluating submission with ID: {kwargs['submission_metadata']['id']}")
     print("=" * 80 + "\n")
     sys.stdout.flush()
 
     # script_dir = os.path.dirname(os.path.abspath(__file__))
-    print("Starting Evaluation.....")
     # print(kwargs['submission_metadata'])
     output = {}
     # evaluated_metrics = []
@@ -126,8 +125,8 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     # # output["result"] = []
 
 
-    print("\033[91mPossible error\033[0m", file=sys.stderr)
-    print("❌ Fatal error while parsing", file=sys.stderr)
+    # print("\033[91mPossible error\033[0m", file=sys.stderr)
+    # print("❌ Fatal error while parsing", file=sys.stderr)
 
     output["result"] = [
         {
@@ -160,16 +159,16 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         },
     ]
 
-    print("🔧 Installing dependencies...")
-    print("📥 Loading annotation file...")
-    print("🧪 Evaluating predictions...")
-    print("📈 Accuracy: 92.3%")
-    print("✅ Evaluation complete!")
+    # print("🔧 Installing dependencies...")
+    # print("📥 Loading annotation file...")
+    # print("🧪 Evaluating predictions...")
+    # print("📈 Accuracy: 92.3%")
+    # print("✅ Evaluation complete!")
 
-    print("⚠️  Warning: trajectory misaligned", file=sys.stderr)
-    print("❌ Evaluation failed due to missing file", file=sys.stderr)
+    # print("⚠️  Warning: trajectory misaligned", file=sys.stderr)
+    # print("❌ Evaluation failed due to missing file", file=sys.stderr)
 
-    print("\n" + "🧵" * 20 + " LOG START " + "🧵" * 20)
+    # print("\n" + "🧵" * 20 + " LOG START " + "🧵" * 20)
 
     # for i, eval_result in enumerate(evaluated_metrics):
     #     metrics = eval_result["metrics"]

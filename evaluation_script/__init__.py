@@ -52,34 +52,9 @@ def is_package_version_on_pypi(package_name, version=None):
         sys.stderr.flush()
         return False
 
-
-# package = "evo"
-# version = "1.31.1"9
-
-# if is_package_version_on_pypi(package, version):
-#     subprocess.check_call([sys.executable, "-m", "pip", "install", f"{package}=={version}"])
-
-def force_install(package):
-    try:
-        subprocess.run([sys.executable,"-m","pip","install","--disable-pip-version-check","--ignore-requires-python",package])
-    except subprocess.CalledProcessError as e:
-        print(f"Error occurred while installing {package}: {e.stderr}")
-        sys.stderr.flush()
-    except FileNotFoundError:
-        print("Error: Pip is not found. make sure you have pip installed.")
-        sys.stderr.flush()
-    except PermissionError:
-        print("Error: Permission denied. ")
-        sys.stderr.flush()
-
-
-    
-
 def install(package):
     # Install a pip python package
 
-    # Args:
-    #     package ([str]): Package name with version
     try:
         subprocess.run([sys.executable,"-m","pip","install","--disable-pip-version-check",package])
     except subprocess.CalledProcessError as e:
@@ -92,29 +67,11 @@ def install(package):
         print("Error: Permission denied. ")
         sys.stderr.flush()
 
-
-
-# def install(package):
-#     # try:
-#     subprocess.check_call([sys.executable, "-m", "pip", "install", package])
-#     # except subprocess.CalledProcessError as e:
-#     #     print(f"❌ Failed to install {package}: {e}")
-
 # Install standard dependencies
-is_package_version_on_pypi("numpy")
-install("numpy")
-# is_package_version_on_pypi("evo")
-# install("evo")
-# is_package_version_on_pypi("scipy", "1.10.1")
-install("scipy")
-install("matplotlib")
-install("pyyaml")
-is_package_version_on_pypi("tqdm")
-install("tqdm")
 install("argcomplete")
 install("colorama")
 install("pillow")
-install("pykitti")            # Might install additional light deps
+# install("pykitti")            # Might install additional light deps
 # install("rosbags")
 # is_package_version_on_pypi("natsort")
 install("natsort")
@@ -126,11 +83,7 @@ this_dir = os.path.dirname(__file__)
 evo_wheel_path = os.path.join(this_dir, "deps", "evo-1.31.1-py3-none-any.whl")
 
 # # try:
-subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps", "--ignore-requires-python", evo_wheel_path])
-
-import evo as afterfunc
-print("evo version:", afterfunc.__version__)
-sys.stdout.flush()
+subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps","--disable-pip-version-check", "--ignore-requires-python", evo_wheel_path])
 
 from evo import __version__
 
@@ -153,7 +106,7 @@ if evo_version_tuple < required_version_tuple:
         f"Evo version {__version__} is less than the required version {'.'.join(map(str, required_version_tuple))}. Point_distances not supported."
     )
 else:
-    print(f"\033[92mEvo version {__version__} meets the required version.\033[0m")
+    print(f"✅ Evo version {__version__} meets the required version.")
     sys.stdout.flush()
 
 
@@ -161,15 +114,8 @@ from evo.core import sync
 from evo.core.trajectory import PoseTrajectory3D
 from evo.core.trajectory import Plane
 from evo.core.metrics import PoseRelation, Unit
-# from evo.tools import file_interface
-# import evo.main_ape as main_ape
-# import evo.main_rpe as main_rpe
 
-# print("✅ evo is installed and available.")
-# except subprocess.CalledProcessError as e:
-#     print(f"❌ Failed to install evo wheel: {e}")
-# except ImportError as e:
-#     print(f"❌ Failed to import evo after install: {e}")
+print("✅ evo is installed and available.")
+sys.stdout.flush()
 
-#
 from .main import evaluate
