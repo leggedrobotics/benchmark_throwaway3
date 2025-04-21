@@ -25,13 +25,13 @@ install("lz4==4.3.3")
 install("zstandard==0.23.0")
 # install("evo==1.31.1")
 try:
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps", "deps/evo-1.31.1-*.whl"])
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps", "deps/evo-1.31.1-py3-none-any.whl"])
 except subprocess.CalledProcessError as e:
     print(f"Failed to install evo: {e}")
 
 # try:
-import evo as iamking
-print("✅ evo is installed and available.")
+import evo as iamtired
+subprocess.check_call(['echo', '✅ evo is installed and available.'])
 # except ImportError as e:
 #     print("❌ evo is NOT available:", e)
 
