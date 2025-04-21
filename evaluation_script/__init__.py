@@ -28,22 +28,28 @@ def is_package_version_on_pypi(package_name, version=None):
                     all_versions = data["releases"].keys()
                     if version in all_versions:
                         print(f"✅ {package_name}=={version} exists on PyPI. Latest version is {latest_version}.")
+                        sys.stdout.flush()
                         return True
                     else:
                         # Use print instead of raising an error to avoid stopping execution
                         print(f"❌ {package_name}=={version} NOT found on PyPI. Latest version is {latest_version}.")
+                        sys.stderr.flush()
                         return False
             else:
                 print(f"⚠️ Could not fetch data for {package_name} from PyPI (Status: {response.status}).")
+                sys.stderr.flush()
                 return False
     except urllib.error.HTTPError as e:
         if e.code == 404:
             print(f"❌ Package {package_name} not found on PyPI.")
+            sys.stderr.flush()
         else:
             print(f"⚠️ HTTP error occurred while checking {package_name} on PyPI: {e}")
+            sys.stderr.flush()
         return False
     except Exception as e:
         print(f"⚠️ An unexpected error occurred while checking {package_name} on PyPI: {e}")
+        sys.stderr.flush()
         return False
 
 
@@ -62,10 +68,13 @@ def install(package):
         subprocess.run([sys.executable,"-m","pip","install",package])
     except subprocess.CalledProcessError as e:
         print(f"Error occurred while installing {package}: {e.stderr}")
+        sys.stderr.flush()
     except FileNotFoundError:
         print("Error: Pip is not found. make sure you have pip installed.")
+        sys.stderr.flush()
     except PermissionError:
         print("Error: Permission denied. ")
+        sys.stderr.flush()
 
 
 
@@ -102,14 +111,10 @@ install("natsort==8.4.0")
 
 # # try:
 # subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps", evo_wheel_path])
+
 import evo as afterfunc
-from evo.core import sync
-from evo.core.trajectory import PoseTrajectory3D
-from evo.core.trajectory import Plane
-from evo.core.metrics import PoseRelation, Unit
-from evo.tools import file_interface
-import evo.main_ape as main_ape
-import evo.main_rpe as main_rpe
+print("evo version:", afterfunc.__version__)
+sys.stdout.flush()
 
 from evo import __version__
 
@@ -133,6 +138,18 @@ if evo_version_tuple < required_version_tuple:
     )
 else:
     print(f"\033[92mEvo version {__version__} meets the required version.\033[0m")
+    sys.stdout.flush()
+
+
+from evo.core import sync
+from evo.core.trajectory import PoseTrajectory3D
+from evo.core.trajectory import Plane
+from evo.core.metrics import PoseRelation, Unit
+from evo.tools import file_interface
+import evo.main_ape as main_ape
+import evo.main_rpe as main_rpe
+
+
 
 # print("✅ evo is installed and available.")
 # except subprocess.CalledProcessError as e:
