@@ -1,1 +1,21 @@
-<p>"Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"</p>
+<h3>Evaluation Criteria</h3>
+<p>For the Boxi 3D detection challenge, we evaluate submitted results using the following metrics:</p>
+
+<table style="width:100%; border-collapse: collapse;">
+  <thead>
+    <tr>
+      <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;"><b>Metric Name</b></th>
+      <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ddd;"><b>Description</b></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding: 8px; vertical-align: top;">L1 Error (L1)</td>
+      <td style="padding: 8px;">The absolute L1 distance between the ground-truth expected depth along a given ray direction and the predicted expected depth along the same ray direction.</td>
+    </tr>
+    <tr>
+      <td style="padding: 8px; vertical-align: top;">mAP</td>
+      <td style="padding: 8px;">Mean Average Precision over all object categories, using IoU threshold of 0.5.</td>
+    </tr>
+  </tbody>
+</table>
