@@ -64,7 +64,7 @@ challenge_phases:
   - id: 1
     name: Development Phase
     codename: dev
-    # challenge: 1
+    challenge: 1
     description: templates/challenge_phase_1_description.html
     leaderboard_public: False
     is_public: False
@@ -117,7 +117,7 @@ challenge_phases:
   - id: 2
     name: Benchmark Phase
     codename: test
-    # challenge: 2
+    challenge: 2
     description: templates/challenge_phase_2_description.html
     leaderboard_public: False
     is_public: False
@@ -129,12 +129,13 @@ challenge_phases:
     start_date: 2019-01-01 00:00:00
     end_date: 2099-05-24 23:59:59
     max_concurrent_submissions_allowed: 3
-    max_submissions_per_day: 5
+    max_submissions_per_day: 10
     max_submissions_per_month: 50
     max_submissions: 50
     default_submission_meta_attributes:
       - name: method_name
         is_visible: True
+        required: True
       - name: method_description
         is_visible: True
       - name: project_url
@@ -142,7 +143,7 @@ challenge_phases:
       - name: publication_url
         is_visible: True
     submission_meta_attributes:
-      - name: TextAttribute
+      - name: Description
         description: Sample
         type: text
       - name: SingleOptionAttribute
@@ -153,9 +154,10 @@ challenge_phases:
         description: Sample
         type: checkbox
         options: ["alpha", "beta", "gamma"]
-      - name: TrueFalseField
+      - name: Are you cheating?
         description: Sample
         type: boolean
+        required: True
     is_restricted_to_select_one_submission: False
     is_partial_submission_evaluation_enabled: False
     allowed_submission_file_types: ".zip, .txt, .tum"

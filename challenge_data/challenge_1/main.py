@@ -2,12 +2,13 @@ import os
 import io
 import zipfile
 from evaluation_script.evo_script import TrajectoryEvaluator, read_tum_trajectory_matrix
+import sys
 
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
     # script_dir = os.path.dirname(os.path.abspath(__file__))
-    # print("Starting Evaluation.....")
-    # print(kwargs['submission_metadata'])
+    print("Starting Evaluation.....")
+    print(kwargs['submission_metadata'])
     output = {}
     # evaluated_metrics = []
 
@@ -117,56 +118,45 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
 
     # # output["result"] = []
 
-    output["stdout"] = [
-                {
-                    "STDOUT": "testing"
-                }
-    ]
 
-    output["metadata"] = [
-                {
-                    "average-evaluation-time": "5 secs",
-                    "foo": "bar"
-                }
-    ]
+    print("Possible error", file=sys.stderr)
+
+    # output["submission_metadata"] = [
+    #     {
+    #         "average-evaluation-time": "5 secs",
+    #         "foo": "bar"
+    #     }
+    # ]
 
     output["result"] = [
     {
-        "split": "heap",
-        "show_to_participant": True,
-        "accuracies": {
+        "heap": {
             "ATE": 1.34, # Use .get for safety if keys might be missing
             "RTE": 2.45,
             "LE": 3.51
         }
     },
     {
-        "split": "eiger",
-        "show_to_participant": True,
-        "accuracies": {
+        "eiger": {
             "ATE": 1.34, # Use .get for safety if keys might be missing
             "RTE": 2.45,
             "LE": 3.51
         }
     },
     {
-        "split": "tt3",
-        "show_to_participant": True,
-        "accuracies": {
+        "tt3": {
             "ATE": 1.34, # Use .get for safety if keys might be missing
             "RTE": 2.45,
             "LE": 3.51
         }
     },
     {
-        "split": "tt4",
-        "show_to_participant": True,
-        "accuracies": {
+        "tt4": {
             "ATE": 1.34, # Use .get for safety if keys might be missing
             "RTE": 2.45,
             "LE": 3.51
         }
-    }
+    },
 ]
 
     # for i, eval_result in enumerate(evaluated_metrics):
@@ -193,6 +183,58 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         output["submission_result"] = output["result"][0][first_split_key]
     else:
         output["submission_result"] = {} # Handle case with no evaluated metrics
+    # Placeholder for submission metadata based on the requested format.
+    # Actual values should be populated based on evaluation results if applicable.
+    output["submission_metadata"] = {
+        "heap": {
+            "metrics": {
+                "time": 5, # Replace with actual accuracy
+                "length": 10
+                # Add more qid: acc pairs as needed
+            },
+            "logs": {
+                "rate": 100, # Replace with actual accuracy
+                "suspicious": "no"
+                # Add more qtype: acc pairs as needed
+            }
+        },
+        "eiger": {
+            "metrics": {
+                "time": 5, # Replace with actual accuracy
+                "length": 10
+                # Add more qid: acc pairs as needed
+            },
+            "logs": {
+                "rate": 100, # Replace with actual accuracy
+                "suspicious": "no"
+                # Add more qtype: acc pairs as needed
+            }
+        },
+        "tt3": {
+            "metrics": {
+                "time": 5, # Replace with actual accuracy
+                "length": 10
+                # Add more qid: acc pairs as needed
+            },
+            "logs": {
+                "rate": 100, # Replace with actual accuracy
+                "suspicious": "no"
+                # Add more qtype: acc pairs as needed
+            }
+        },
+        "tt4": {
+            "metrics": {
+                "time": 5, # Replace with actual accuracy
+                "length": 10
+                # Add more qid: acc pairs as needed
+            },
+            "logs": {
+                "rate": 100, # Replace with actual accuracy
+                "suspicious": "no"
+                # Add more qtype: acc pairs as needed
+            }
+        }
+    }
 
     print("Completed evaluation for Dev Phase")
 
