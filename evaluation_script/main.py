@@ -7,8 +7,9 @@ import sys
 
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
+    #🔁
     print("\n" + "=" * 80)
-    print(f"🔁 Evaluating submission with ID: {kwargs['submission_metadata']['id']}")
+    print(f"Evaluating submission with ID: {kwargs['submission_metadata']['id']}")
     print("=" * 80 + "\n")
     sys.stdout.flush()
 
