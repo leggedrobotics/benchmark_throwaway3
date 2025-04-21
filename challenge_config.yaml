@@ -17,7 +17,7 @@ tags:
   - Legged Robots
   - SLAM
   - Field Robotics
-  - computer-vision
+  - Multi-Modal
 leaderboard:
   - id: 1
     schema:
@@ -25,16 +25,16 @@ leaderboard:
         "labels": ["ATE", "RTE", "LE"],
         "default_order_by": "ATE",
         "metadata": {
-          "Metric1": {
-            "sort_ascending": True,
+          "ATE": {
+            "sort_ascending": False,
             "description": "Absolute Translation Error.",
           },
-          "Metric2": {
-            "sort_ascending": True,
+          "RTE": {
+            "sort_ascending": False,
             "description": "Relative Translation Error.",
           },
           "LE": {
-            "sort_ascending": True,
+            "sort_ascending": False,
             "description": "Last Error for ATE.",
           }
         }
@@ -46,15 +46,15 @@ leaderboard:
         "default_order_by": "LE",
         "metadata": {
           "ATE": {
-            "sort_ascending": True,
+            "sort_ascending": False,
             "description": "Absolute Translation Error.",
           },
           "RTE": {
-            "sort_ascending": True,
+            "sort_ascending": False,
             "description": "Relative Translation Error.",
           },
           "LE": {
-            "sort_ascending": True,
+            "sort_ascending": False,
             "description": "Last Error for ATE.",
           }
         }
