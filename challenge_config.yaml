@@ -75,8 +75,8 @@ challenge_phases:
     start_date: 2019-01-19 00:00:00
     end_date: 2099-04-25 23:59:59
     test_annotation_file: annotations/dev_annotations.zip
-    max_concurrent_submissions_allowed: 3
-    max_submissions_per_day: 5
+    max_concurrent_submissions_allowed: 10
+    max_submissions_per_day: 10
     max_submissions_per_month: 50
     max_submissions: 50
     # Attributes for users to fill.
