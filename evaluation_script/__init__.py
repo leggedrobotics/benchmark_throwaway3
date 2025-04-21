@@ -1,29 +1,54 @@
 import subprocess
 import sys
 import os
-# import urllib.request
-# import json
+import urllib.request
+import json
 
-# def is_package_version_on_pypi(package_name, version):
-#     url = f"https://pypi.org/pypi/{package_name}/json"
-#     try:
-#         with urllib.request.urlopen(url) as response:
-#             if response.status == 200:
-#                 data = json.load(response)
-#                 all_versions = data["releases"].keys()
-#                 if version in all_versions:
-#                     print(f"✅ {package_name}=={version} exists on PyPI.")
-#                     return True
-#                 else:
-#                     print(f"❌ {package_name}=={version} NOT found on PyPI.")
-#                     return False
-#     except Exception as e:
-#         print(f"⚠️ Could not check {package_name} version on PyPI: {e}")
-#         return False
+def is_package_version_on_pypi(package_name, version=None):
+    """
+    Checks if a package (and optionally a specific version) exists on PyPI.
+
+    Args:
+        package_name (str): The name of the package.
+        version (str, optional): The specific version to check. Defaults to None.
+
+    Returns:
+        bool: True if the package (or specific version) exists, False otherwise.
+    """
+    url = f"https://pypi.org/pypi/{package_name}/json"
+    try:
+        with urllib.request.urlopen(url) as response:
+            if response.status == 200:
+                data = json.load(response)
+                latest_version = data["info"]["version"]
+                if version is None:
+                    print(f"✅ {package_name} exists on PyPI. Latest version is {latest_version}.")
+                    return True
+                else:
+                    all_versions = data["releases"].keys()
+                    if version in all_versions:
+                        print(f"✅ {package_name}=={version} exists on PyPI. Latest version is {latest_version}.")
+                        return True
+                    else:
+                        # Use print instead of raising an error to avoid stopping execution
+                        print(f"❌ {package_name}=={version} NOT found on PyPI. Latest version is {latest_version}.")
+                        return False
+            else:
+                print(f"⚠️ Could not fetch data for {package_name} from PyPI (Status: {response.status}).")
+                return False
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            print(f"❌ Package {package_name} not found on PyPI.")
+        else:
+            print(f"⚠️ HTTP error occurred while checking {package_name} on PyPI: {e}")
+        return False
+    except Exception as e:
+        print(f"⚠️ An unexpected error occurred while checking {package_name} on PyPI: {e}")
+        return False
 
 
 # package = "evo"
-# version = "1.31.1"
+# version = "1.31.1"9
 
 # if is_package_version_on_pypi(package, version):
 #     subprocess.check_call([sys.executable, "-m", "pip", "install", f"{package}=={version}"])
@@ -51,17 +76,22 @@ def install(package):
 #     #     print(f"❌ Failed to install {package}: {e}")
 
 # Install standard dependencies
+is_package_version_on_pypi("numpy")
 install("numpy")
+is_package_version_on_pypi("evo")
 install("evo")
+is_package_version_on_pypi("scipy", "1.10.1")
 install("scipy==1.10.1")
 # install("matplotlib==3.7.5")
 # install("pyyaml==6.0.2")
+is_package_version_on_pypi("tqdm")
 install("tqdm")
 # install("argcomplete==3.6.2")
 # install("colorama==0.4.6")
 # install("pillow==10.4.0")
 # install("pykitti")            # Might install additional light deps
 # install("rosbags==0.9.23")
+is_package_version_on_pypi("natsort", "8.4.0")
 install("natsort==8.4.0")
 # install("lz4==4.3.3")
 # install("zstandard==0.23.0")
