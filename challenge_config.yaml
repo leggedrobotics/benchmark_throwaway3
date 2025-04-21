@@ -5,7 +5,7 @@ short_description: Robot pose estimation in the wild.
 description: templates/description.html
 evaluation_details: templates/evaluation_details.html
 terms_and_conditions: templates/terms_and_conditions.html
-image: media/anymal_challenge.gif #media/rsl_logo.png
+image: media/rsl_logo.png #media/rsl_logo.png
 submission_guidelines: templates/submission_guidelines.html
 leaderboard_description: The leaderboard is based on the average of the metrics across all splits in the challange.
 evaluation_script: evaluation_script.zip
