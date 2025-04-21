@@ -1,7 +1,7 @@
 import os
 import io
 import zipfile
-from evaluation_script.evo_script import TrajectoryEvaluator, read_tum_trajectory_matrix
+from evo_script import TrajectoryEvaluator, read_tum_trajectory_matrix
 import sys
 
 # Add parent directory (where evaluation_script lives) to Python path
