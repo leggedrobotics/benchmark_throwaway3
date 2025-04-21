@@ -68,14 +68,14 @@ def install(package):
         sys.stderr.flush()
 
 # Install standard dependencies
-install("argcomplete")
-install("colorama")
+# install("argcomplete")
+# install("colorama")
 install("pillow")
 # install("pykitti")            # Might install additional light deps
 # install("rosbags")
 # is_package_version_on_pypi("natsort")
 install("natsort")
-install("lz4")
+# install("lz4")
 install("zstandard")
 
 # Install evo from local wheel inside evaluation_script/deps/

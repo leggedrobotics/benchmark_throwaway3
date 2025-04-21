@@ -67,9 +67,9 @@ challenge_phases:
     codename: dev
     is_active: True
     description: templates/challenge_phase_1_description.html
-    leaderboard_public: False
-    is_submission_public: False
-    is_public: False
+    leaderboard_public: True
+    is_submission_public: True
+    is_public: True
     allowed_email_ids: []
     disable_logs: False
     start_date: 2019-01-19 00:00:00
