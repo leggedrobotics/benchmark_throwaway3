@@ -67,11 +67,11 @@ install("natsort==8.4.0")
 # install("zstandard==0.23.0")
 
 # Install evo from local wheel inside evaluation_script/deps/
-this_dir = os.path.dirname(__file__)
-evo_wheel_path = os.path.join(this_dir, "deps", "evo-1.31.1-py3-none-any.whl")
+# this_dir = os.path.dirname(__file__)
+# evo_wheel_path = os.path.join(this_dir, "deps", "evo-1.31.1-py3-none-any.whl")
 
-# try:
-subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps", evo_wheel_path])
+# # try:
+# subprocess.check_call([sys.executable, "-m", "pip", "install", "--no-deps", evo_wheel_path])
 import evo as afterfunc
 from evo.core import sync
 from evo.core.trajectory import PoseTrajectory3D
@@ -80,6 +80,30 @@ from evo.core.metrics import PoseRelation, Unit
 from evo.tools import file_interface
 import evo.main_ape as main_ape
 import evo.main_rpe as main_rpe
+
+from evo import __version__
+
+def version_to_tuple(version):
+    # Split version by '.' and keep only numeric parts
+    numeric_parts = []
+    for part in version.split("."):
+        # Extract leading numeric portion of each part
+        numeric_part = "".join(c for c in part if c.isdigit())
+        if numeric_part:
+            numeric_parts.append(int(numeric_part))
+    return tuple(numeric_parts)
+
+evo_version_tuple = version_to_tuple(__version__)
+required_version_tuple = (1, 30, 1)
+
+# Check if the version meets the required version
+if evo_version_tuple < required_version_tuple:
+    raise Exception(
+        f"Evo version {__version__} is less than the required version {'.'.join(map(str, required_version_tuple))}. Point_distances not supported."
+    )
+else:
+    print(f"\033[92mEvo version {__version__} meets the required version.\033[0m")
+
 # print("✅ evo is installed and available.")
 # except subprocess.CalledProcessError as e:
 #     print(f"❌ Failed to install evo wheel: {e}")
