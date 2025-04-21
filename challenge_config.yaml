@@ -26,15 +26,15 @@ leaderboard:
         "default_order_by": "ATE",
         "metadata": {
           "ATE": {
-            "sort_ascending": False,
+            "sort_ascending": True,
             "description": "Absolute Translation Error.",
           },
           "RTE": {
-            "sort_ascending": False,
+            "sort_ascending": True,
             "description": "Relative Translation Error.",
           },
           "LE": {
-            "sort_ascending": False,
+            "sort_ascending": True,
             "description": "Last Error for ATE.",
           }
         }
@@ -46,15 +46,15 @@ leaderboard:
         "default_order_by": "LE",
         "metadata": {
           "ATE": {
-            "sort_ascending": False,
+            "sort_ascending": True,
             "description": "Absolute Translation Error.",
           },
           "RTE": {
-            "sort_ascending": False,
+            "sort_ascending": True,
             "description": "Relative Translation Error.",
           },
           "LE": {
-            "sort_ascending": False,
+            "sort_ascending": True,
             "description": "Last Error for ATE.",
           }
         }
