@@ -21,7 +21,6 @@ You should have received a copy of the GNU General Public License
 along with evo.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import logging
 import typing
 
 import numpy as np
@@ -30,10 +29,6 @@ from evo.core import lie_algebra, metrics
 from evo.core.result import Result
 from evo.core.trajectory import PosePath3D, PoseTrajectory3D, Plane
 from evo.tools.settings import SETTINGS
-
-logger = logging.getLogger(__name__)
-
-SEP = "-" * 80  # separator line
 
 
 def ape(traj_ref: PosePath3D, traj_est: PosePath3D,
@@ -48,23 +43,17 @@ def ape(traj_ref: PosePath3D, traj_est: PosePath3D,
     only_scale = correct_scale and not align
     alignment_transformation = None
     if align or correct_scale:
-        logger.debug(SEP)
         alignment_transformation = lie_algebra.sim3(
             *traj_est.align(traj_ref, correct_scale, only_scale, n=n_to_align))
     if align_origin:
-        logger.debug(SEP)
         alignment_transformation = traj_est.align_origin(traj_ref)
 
     # Projection is done after potential 3D alignment & transformation steps.
     if project_to_plane:
-        logger.debug(SEP)
-        logger.debug("Projecting trajectories to %s plane.",
-                     project_to_plane.value)
         traj_ref.project(project_to_plane)
         traj_est.project(project_to_plane)
 
     # Calculate APE.
-    logger.debug(SEP)
     data = (traj_ref, traj_est)
     ape_metric = metrics.APE(pose_relation)
     ape_metric.process_data(data)
@@ -92,9 +81,6 @@ def ape(traj_ref: PosePath3D, traj_est: PosePath3D,
     ape_result = ape_metric.get_result(ref_name, est_name)
     ape_result.info["title"] = title
 
-    logger.debug(SEP)
-    logger.info(ape_result.pretty_str())
-
     ape_result.add_trajectory(ref_name, traj_ref)
     ape_result.add_trajectory(est_name, traj_est)
     if isinstance(traj_est, PoseTrajectory3D):
@@ -110,8 +96,3 @@ def ape(traj_ref: PosePath3D, traj_est: PosePath3D,
                                 alignment_transformation)
 
     return ape_result
-
-
-# if __name__ == '__main__':
-#     from evo import entry_points
-#     entry_points.ape()

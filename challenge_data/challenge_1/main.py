@@ -1,6 +1,7 @@
 import os
 import io
 import zipfile
+import json
 print("Starting Evaluation.....")
 print("Starting Evaluation.....")
 print("Starting Evaluation.....")
@@ -190,62 +191,99 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     # you might need to aggregate or select specific results.
     # For now, let's keep the first split's results for submission_result as an example.
     if output["result"]:
-        first_split_key = list(output["result"][0].keys())[0]
-        output["submission_result"] = output["result"][0][first_split_key]
+        total_ate = 0
+        total_rte = 0
+        total_le = 0
+        count = 0
+
+        for split_result in output["result"]:
+            # Each split_result is a dict like {"split_name": {"ATE": x, "RTE": y, "LE": z}}
+            # Get the inner metrics dictionary (assuming only one key per outer dict)
+            split_name = list(split_result.keys())[0]
+            metrics = split_result[split_name]
+
+            # Accumulate metrics if they exist and are not None
+            if metrics.get("ATE") is not None:
+                total_ate += metrics["ATE"]
+            if metrics.get("RTE") is not None:
+                total_rte += metrics["RTE"]
+            if metrics.get("LE") is not None:
+                total_le += metrics["LE"]
+            count += 1 # Increment count for each split processed
+
+        # Calculate averages, handle division by zero if count is 0
+        if count > 0:
+            avg_ate = total_ate / count
+            avg_rte = total_rte / count
+            avg_le = total_le / count
+            output["submission_result"] = {
+                "ATE": avg_ate,
+                "RTE": avg_rte,
+                "LE": avg_le
+            }
+        else:
+            # Handle case with no valid metrics found
+            output["submission_result"] = {
+                "ATE": None,
+                "RTE": None,
+                "LE": None
+            }
     else:
         output["submission_result"] = {} # Handle case with no evaluated metrics
     # Placeholder for submission metadata based on the requested format.
     # Actual values should be populated based on evaluation results if applicable.
-    output["submission_metadata"] = {
-        "heap": {
-            "metrics": {
-                "time": 5, # Replace with actual accuracy
-                "length": 10
-                # Add more qid: acc pairs as needed
-            },
-            "logs": {
-                "rate": 100, # Replace with actual accuracy
-                "suspicious": "no"
-                # Add more qtype: acc pairs as needed
-            }
-        },
-        "eiger": {
-            "metrics": {
-                "time": 5, # Replace with actual accuracy
-                "length": 10
-                # Add more qid: acc pairs as needed
-            },
-            "logs": {
-                "rate": 100, # Replace with actual accuracy
-                "suspicious": "no"
-                # Add more qtype: acc pairs as needed
-            }
-        },
-        "tt3": {
-            "metrics": {
-                "time": 5, # Replace with actual accuracy
-                "length": 10
-                # Add more qid: acc pairs as needed
-            },
-            "logs": {
-                "rate": 100, # Replace with actual accuracy
-                "suspicious": "no"
-                # Add more qtype: acc pairs as needed
-            }
-        },
-        "tt4": {
-            "metrics": {
-                "time": 5, # Replace with actual accuracy
-                "length": 10
-                # Add more qid: acc pairs as needed
-            },
-            "logs": {
-                "rate": 100, # Replace with actual accuracy
-                "suspicious": "no"
-                # Add more qtype: acc pairs as needed
-            }
-        }
-    }
+    output["submission_metadata"] = json.dumps(kwargs['submission_metadata'])
+    
+    # output["submission_metadata"] = {
+    #     "heap": {
+    #         "metrics": {
+    #             "time": 5, # Replace with actual accuracy
+    #             "length": 10
+    #             # Add more qid: acc pairs as needed
+    #         },
+    #         "logs": {
+    #             "rate": 100, # Replace with actual accuracy
+    #             "suspicious": "no"
+    #             # Add more qtype: acc pairs as needed
+    #         }
+    #     },
+    #     "eiger": {
+    #         "metrics": {
+    #             "time": 5, # Replace with actual accuracy
+    #             "length": 10
+    #             # Add more qid: acc pairs as needed
+    #         },
+    #         "logs": {
+    #             "rate": 100, # Replace with actual accuracy
+    #             "suspicious": "no"
+    #             # Add more qtype: acc pairs as needed
+    #         }
+    #     },
+    #     "tt3": {
+    #         "metrics": {
+    #             "time": 5, # Replace with actual accuracy
+    #             "length": 10
+    #             # Add more qid: acc pairs as needed
+    #         },
+    #         "logs": {
+    #             "rate": 100, # Replace with actual accuracy
+    #             "suspicious": "no"
+    #             # Add more qtype: acc pairs as needed
+    #         }
+    #     },
+    #     "tt4": {
+    #         "metrics": {
+    #             "time": 5, # Replace with actual accuracy
+    #             "length": 10
+    #             # Add more qid: acc pairs as needed
+    #         },
+    #         "logs": {
+    #             "rate": 100, # Replace with actual accuracy
+    #             "suspicious": "no"
+    #             # Add more qtype: acc pairs as needed
+    #         }
+    #     }
+    # }
 
     print("Completed evaluation for Dev Phase")
 

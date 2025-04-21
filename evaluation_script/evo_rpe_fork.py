@@ -21,7 +21,6 @@ You should have received a copy of the GNU General Public License
 along with evo.  If not, see <http://www.gnu.org/licenses/>.
 """
 
-import logging
 import typing
 
 import numpy as np
@@ -29,10 +28,6 @@ from evo.core import lie_algebra, metrics
 from evo.core.result import Result
 from evo.core.trajectory import PosePath3D, PoseTrajectory3D, Plane
 from evo.tools.settings import SETTINGS
-
-logger = logging.getLogger(__name__)
-
-SEP = "-" * 80  # separator line
 
 
 def rpe(traj_ref: PosePath3D, traj_est: PosePath3D,
@@ -49,23 +44,17 @@ def rpe(traj_ref: PosePath3D, traj_est: PosePath3D,
     only_scale = correct_scale and not align
     alignment_transformation = None
     if align or correct_scale:
-        logger.debug(SEP)
         alignment_transformation = lie_algebra.sim3(
             *traj_est.align(traj_ref, correct_scale, only_scale, n=n_to_align))
     if align_origin:
-        logger.debug(SEP)
         alignment_transformation = traj_est.align_origin(traj_ref)
 
     # Projection is done after potential 3D alignment & transformation steps.
     if project_to_plane:
-        logger.debug(SEP)
-        logger.debug("Projecting trajectories to %s plane.",
-                     project_to_plane.value)
         traj_ref.project(project_to_plane)
         traj_est.project(project_to_plane)
 
     # Calculate RPE.
-    logger.debug(SEP)
     data = (traj_ref, traj_est)
     rpe_metric = metrics.RPE(pose_relation, delta, delta_unit, rel_delta_tol,
                              all_pairs, pairs_from_reference)
@@ -93,8 +82,6 @@ def rpe(traj_ref: PosePath3D, traj_est: PosePath3D,
 
     rpe_result = rpe_metric.get_result(ref_name, est_name)
     rpe_result.info["title"] = title
-    logger.debug(SEP)
-    logger.info(rpe_result.pretty_str())
 
     # Restrict trajectories to delta ids for further processing steps.
     if support_loop:
