@@ -61,7 +61,7 @@ def is_package_version_on_pypi(package_name, version=None):
 
 def force_install(package):
     try:
-        subprocess.run([sys.executable,"-m","pip","install" ,"--ignore-requires-python",package])
+        subprocess.run([sys.executable,"-m","pip","install","--disable-pip-version-check","--ignore-requires-python",package])
     except subprocess.CalledProcessError as e:
         print(f"Error occurred while installing {package}: {e.stderr}")
         sys.stderr.flush()
@@ -81,7 +81,7 @@ def install(package):
     # Args:
     #     package ([str]): Package name with version
     try:
-        subprocess.run([sys.executable,"-m","pip","install",package])
+        subprocess.run([sys.executable,"-m","pip","install","--disable-pip-version-check",package])
     except subprocess.CalledProcessError as e:
         print(f"Error occurred while installing {package}: {e.stderr}")
         sys.stderr.flush()
@@ -115,7 +115,7 @@ install("argcomplete")
 install("colorama")
 install("pillow")
 install("pykitti")            # Might install additional light deps
-install("rosbags")
+# install("rosbags")
 # is_package_version_on_pypi("natsort")
 install("natsort")
 install("lz4")

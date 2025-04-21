@@ -7,8 +7,14 @@ import sys
 
 
 def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwargs):
+
+    print("\n" + "=" * 80)
+    print("🔁 NEW RUN STARTING")
+    print("=" * 80 + "\n")
+    sys.stdout.flush()
+
     # script_dir = os.path.dirname(os.path.abspath(__file__))
-    print("\033[92mStarting Evaluation.....\033[0m")
+    print("Starting Evaluation.....")
     # print(kwargs['submission_metadata'])
     output = {}
     # evaluated_metrics = []
@@ -121,6 +127,7 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
 
 
     print("\033[91mPossible error\033[0m", file=sys.stderr)
+    print("❌ Fatal error while parsing", file=sys.stderr)
 
     output["result"] = [
         {
@@ -153,6 +160,17 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
         },
     ]
 
+    print("🔧 Installing dependencies...")
+    print("📥 Loading annotation file...")
+    print("🧪 Evaluating predictions...")
+    print("📈 Accuracy: 92.3%")
+    print("✅ Evaluation complete!")
+
+    print("⚠️  Warning: trajectory misaligned", file=sys.stderr)
+    print("❌ Evaluation failed due to missing file", file=sys.stderr)
+
+    print("\n" + "🧵" * 20 + " LOG START " + "🧵" * 20)
+
     # for i, eval_result in enumerate(evaluated_metrics):
     #     metrics = eval_result["metrics"]
     #     # Use filename or index to create split names
@@ -172,46 +190,47 @@ def evaluate(test_annotation_file, user_submission_file, phase_codename, **kwarg
     # If EvalAI expects a specific structure like the original one,
     # you might need to aggregate or select specific results.
     # For now, let's keep the first split's results for submission_result as an example.
-    if output["result"]:
-        total_ate = 0
-        total_rte = 0
-        total_le = 0
-        count = 0
+    # if output["result"]:
+    #     total_ate = 0
+    #     total_rte = 0
+    #     total_le = 0
+    #     count = 0
 
-        for split_result in output["result"]:
-            # Each split_result is a dict like {"split_name": {"ATE": x, "RTE": y, "LE": z}}
-            # Get the inner metrics dictionary (assuming only one key per outer dict)
-            split_name = list(split_result.keys())[0]
-            metrics = split_result[split_name]
+    #     for split_result in output["result"]:
+    #         # Each split_result is a dict like {"split_name": {"ATE": x, "RTE": y, "LE": z}}
+    #         # Get the inner metrics dictionary (assuming only one key per outer dict)
+    #         split_name = list(split_result.keys())[0]
+    #         metrics = split_result[split_name]
 
-            # Accumulate metrics if they exist and are not None
-            if metrics.get("ATE") is not None:
-                total_ate += metrics["ATE"]
-            if metrics.get("RTE") is not None:
-                total_rte += metrics["RTE"]
-            if metrics.get("LE") is not None:
-                total_le += metrics["LE"]
-            count += 1 # Increment count for each split processed
+    #         # Accumulate metrics if they exist and are not None
+    #         if metrics.get("ATE") is not None:
+    #             total_ate += metrics["ATE"]
+    #         if metrics.get("RTE") is not None:
+    #             total_rte += metrics["RTE"]
+    #         if metrics.get("LE") is not None:
+    #             total_le += metrics["LE"]
+    #         count += 1 # Increment count for each split processed
 
-        # Calculate averages, handle division by zero if count is 0
-        if count > 0:
-            avg_ate = total_ate / count
-            avg_rte = total_rte / count
-            avg_le = total_le / count
-            output["submission_result"] = {
-                "ATE": avg_ate,
-                "RTE": avg_rte,
-                "LE": avg_le
-            }
-        else:
-            # Handle case with no valid metrics found
-            output["submission_result"] = {
-                "ATE": None,
-                "RTE": None,
-                "LE": None
-            }
-    else:
-        output["submission_result"] = {} # Handle case with no evaluated metrics
+    #     # Calculate averages, handle division by zero if count is 0
+    #     if count > 0:
+    #         avg_ate = total_ate / count
+    #         avg_rte = total_rte / count
+    #         avg_le = total_le / count
+    #         output["submission_result"] = {
+    #             "ATE": avg_ate,
+    #             "RTE": avg_rte,
+    #             "LE": avg_le
+    #         }
+    #     else:
+    #         # Handle case with no valid metrics found
+    #         output["submission_result"] = {
+    #             "ATE": None,
+    #             "RTE": None,
+    #             "LE": None
+    #         }
+    # else:
+    #     output["submission_result"] = {} # Handle case with no evaluated metrics
+    output["submission_result"] = output["result"][0]["heap"]
     # Placeholder for submission metadata based on the requested format.
     # Actual values should be populated based on evaluation results if applicable.
     output["submission_metadata"] = json.dumps(kwargs['submission_metadata'])
